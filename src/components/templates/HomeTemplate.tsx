@@ -24,7 +24,7 @@ import footwear from "../../assets/images/footwear.jpeg";
 
 export const HomeTemplate = () => {
   return (
-    <main className="px-4 md:px-12 lg:px-20 py-10 space-y-10">
+    <main className="px-4 md:px-12 lg:px-20 py-10 space-y-10 mt-2">
       <HeroSection 
         headline="Shop anything from the comfort of your home"
         ctaText="Browse Products"

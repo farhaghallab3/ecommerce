@@ -10,8 +10,10 @@ import { Phone, Mail} from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="px-6 pt-10 pb-4 mt-10 ">
+    <footer className="  px-6 pt-10 pb-4  relative">
       {/* Grid Container */}
+            {/* Centered horizontal line at top */}
+      <hr className=" mx-auto border-t-1 border-black mb-10" />
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 max-w-7xl mx-auto">
         {/* Brand Column */}
