@@ -1,9 +1,7 @@
-// src/App.tsx
-
-
-import { BrowserRouter } from "react-router-dom";
-import { Layout } from "./components/organisms/Layout";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
+import { SignupPage } from "./pages/SignupPage";
+import LoginForm from "./components/organisms/LoginForm/LoginForm";
 
 
 
@@ -11,9 +9,17 @@ function App() {
 
   return (
     <BrowserRouter basename='/ecommerce'>
-    <Layout>
-  <Home />
-  </Layout>
+  
+       <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignupPage />} />
+         <Route path="/login" element={<LoginForm />} />
+        {/* <Route path="/products" element={<ProductsPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />  */}
+      </Routes> 
+
+  
     </BrowserRouter>
   );
 }

@@ -1,17 +1,14 @@
-import React from 'react';
+import type { ReactNode } from "react";
 
-interface AuthTemplateProps {
-  children: React.ReactNode;
+interface AuthLayoutProps {
+  children: ReactNode;
 }
 
-const AuthTemplate: React.FC<AuthTemplateProps> = ({ children }) => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md p-6  rounded-xl shadow-md">
-        {children}
-      </div>
+const AuthLayout = ({ children }: AuthLayoutProps) => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+      {children}
     </div>
-  );
-};
-
-export default AuthTemplate;
+  </div>
+);
+export default AuthLayout;

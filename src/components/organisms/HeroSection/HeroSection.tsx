@@ -1,6 +1,6 @@
 // src/components/organisms/HeroSection/HeroSection.tsx
 
-import { Button } from "../../atoms/Button/Button";
+import Button from "../../atoms/Button/Button";
 
 type HeroSectionProps = {
   headline: string;
@@ -12,7 +12,6 @@ type HeroSectionProps = {
 
 export const HeroSection = ({
   headline,
-  ctaText,
   customersCount,
   imageSrc,
   imageAlt,
@@ -27,7 +26,12 @@ export const HeroSection = ({
           </span>
         ))}
       </h1>
-      <Button className="mb-3 text-white">{ctaText}</Button>
+      <div className="flex w-1/2 justify-center px-3 py-2  bg-emerald-400 hover:bg-emerald-500 text-white  rounded-[16px] transition">
+      <Button
+      text="Browse Products"
+      onClick={() => console.log("Button clicked")}
+      />
+      </div>
       <div className="flex items-center gap-2 text-gray-500 text-sm mt-2">
         <span className="text-yellow-400 text-lg">★</span>
         <span>Used by {customersCount}</span>

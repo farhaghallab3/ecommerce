@@ -1,14 +1,21 @@
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-}
+import type { ReactNode } from "react";
 
-export const Button = ({ children, className = "", ...props }: ButtonProps) => {
-  return (
-    <button
-      className={`bg-[#3EC99B] px-4 py-2 rounded-[16px]  font-medium ${className}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
+type ButtonProps = {
+  className?: string;
+  onClick?: () => void;
+  children?: ReactNode;
+  text?: string;
+  type?: "button" | "submit" | "reset";
 };
+
+const Button = ({ text, onClick, type = 'submit' }: ButtonProps) => (
+  <button
+    type={type}
+    onClick={onClick}
+    
+  >
+    {text}
+  </button>
+);
+
+export default Button;
