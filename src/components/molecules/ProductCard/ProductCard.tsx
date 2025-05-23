@@ -13,7 +13,7 @@ export const ProductCard = ({ image, alt }: ProductCardProps) => {
         alt={alt}
         className=" w-full group-hover:scale-105 transition-transform duration-300"
       />
-      <div className="absolute bottom-3 left-3  text-white text-sm px-2 py-1 rounded-md">
+      <div className="absolute bottom-3 left-3 text-white text-sm px-2 py-1 rounded-md">
         {alt}
       </div>
     </div>

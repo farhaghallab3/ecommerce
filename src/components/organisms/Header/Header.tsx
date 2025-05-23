@@ -1,39 +1,41 @@
-import { Heart, ShoppingCart } from "lucide-react";
-
-import { Logo } from "../../atoms/Logo/Logo";
-import { LocationDelivery } from "../../molecules/LocationDelivery/LocationDelivery";
-import { SearchBar } from "../../molecules/SearchBar/SearchBar";
-import Button from "../../atoms/Button/Button";
-import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { Menu } from "lucide-react";
+import { HeaderLeft } from "./HeaderLeft";
+import { HeaderCenter } from "./HeaderCenter";
+import { HeaderRight } from "./HeaderRight";
+import { RightSideMenu } from "../../molecules/LeftSideMenu";
 
 export const Header = () => {
-const navigate = useNavigate();
-
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50  bg-[#ECEAEA] ">
-      <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto ">
-        <div className="flex items-center gap-6">
-          <Logo />
-          <LocationDelivery />
-        </div>
-
-        <SearchBar />
-
-        <div className="flex items-center gap-4 mr-6">
-          <div className="flex items-center gap-7 mr-24">
-            <ShoppingCart className="w-5 h-5" />
-            <Heart className="w-5 h-5" />
-          </div>
-          <div className="flex justify-center py-2 px-4 bg-emerald-400 hover:bg-emerald-500 text-white py-2 rounded-[16px] transition">
-          <Button text="Sign In" 
-            onClick={() => navigate("/login")}
-          />
-          </div>
-          
-        </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#ECEAEA]">
+      {/* Desktop Header */}
+      <div className="hidden md:flex items-center px-8 py-4 max-w-7xl mx-auto">
+        <HeaderLeft />
+        <HeaderCenter />
+        <HeaderRight />
       </div>
+
+      {/* Mobile Header */}
+      <div className="flex md:hidden items-center justify-between px-4 py-3 max-w-7xl mx-auto">
+        <HeaderLeft />
+        <button
+          className="p-2"
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open menu"
+        >
+          <Menu className="w-7 h-7 text-emerald-400" />
+        </button>
+      </div>
+
+      {/* Mobile Search Bar */}
+      <div className="md:hidden px-4 pb-2 max-w-7xl mx-auto">
+        <HeaderCenter />
+      </div>
+
+      {/* Left Side Drawer Menu */}
+      <RightSideMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
     </header>
   );
 };

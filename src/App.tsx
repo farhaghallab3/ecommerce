@@ -1,7 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import { SignupPage } from "./pages/SignupPage";
+
 import LoginForm from "./components/organisms/LoginForm/LoginForm";
+import { SignupPage } from "./pages/Home/SignUp/SignupPage";
+
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+
 
 
 
@@ -18,6 +23,21 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />  */}
       </Routes> 
+ 
+<ToastContainer
+  toastClassName="rounded shadow-md font-semibold bg-emerald-400  text-white"
+  className="text-white"
+  progressClassName="bg-white"
+  position="top-right"
+  autoClose={3000}
+  hideProgressBar={false}
+  newestOnTop={false}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+/>
 
   
     </BrowserRouter>

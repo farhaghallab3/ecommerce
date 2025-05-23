@@ -1,4 +1,5 @@
-import  SignUp from "../components/organisms/SignUpForm/SignupForm";
+import SignUp from ".";
+
 
 
 export const SignupPage = () => (

@@ -1,6 +1,4 @@
-// src/components/organisms/HeroSection/HeroSection.tsx
-
-import Button from "../../atoms/Button/Button";
+import { Button } from "../../atoms/Button/Button";
 
 type HeroSectionProps = {
   headline: string;
@@ -17,7 +15,7 @@ export const HeroSection = ({
   imageAlt,
 }: HeroSectionProps) => (
   <section className="px-8 mt-10 mb-8 flex flex-col lg:flex-row items-center justify-between gap-8">
-    <div className="max-w-xl">
+    <div className="w-full lg:w-1/2 max-w-xl text-center lg:text-left">
       <h1 className="text-4xl font-bold mb-4">
         {headline.split("<br />").map((line, index) => (
           <span key={index}>
@@ -26,18 +24,18 @@ export const HeroSection = ({
           </span>
         ))}
       </h1>
-      <div className="flex w-1/2 justify-center px-3 py-2  bg-emerald-400 hover:bg-emerald-500 text-white  rounded-[16px] transition">
-      <Button
-      text="Browse Products"
-      onClick={() => console.log("Button clicked")}
-      />
+      <div className="w-1/2 mx-auto lg:mx-0 bg-emerald-400  text-white transition hover:bg-emerald-500 rounded-[16px]">
+        <Button
+          text="Browse Products"
+          onClick={() => console.log("Button clicked")}
+        />
       </div>
-      <div className="flex items-center gap-2 text-gray-500 text-sm mt-2">
+      <div className="flex items-center gap-2 text-gray-500 text-sm mt-2 justify-center lg:justify-start">
         <span className="text-yellow-400 text-lg">★</span>
         <span>Used by {customersCount}</span>
       </div>
     </div>
-    <div className="w-full lg:w-1/2 mt-8 lg:mt-0">
+    <div className="w-full lg:w-1/2 mt-8 lg:mt-0 max-w-lg">
       <img
         src={imageSrc}
         alt={imageAlt}

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
-import { useSignup } from "../../../hooks/useSignup";
-import { Button } from "../../atoms/Button/Button";
-import LabeledPasswordInput from "../../atoms/Input/LabeledPasswordInput";
-import LabeledInput from "../../atoms/LabeledInput/LabeledInput";
-import CheckboxWithLabel from "../../molecules/CheckboxWithLabel";
-import { toast } from "react-toastify";
+import CheckboxWithLabel from "./CheckboxWithLabel";
 
+import { useSignup } from "../../hooks/useSignup";
+import { Link } from "react-router-dom";
+import LabeledInput from "../atoms/LabeledInput/LabeledInput";
+import LabeledPasswordInput from "../atoms/Input/LabeledPasswordInput";
+import { Button } from "../atoms/Button/Button";
 
 const SignupForm = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -18,32 +17,21 @@ const SignupForm = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const toastOptions = {
-    toastClassName: "bg-emerald-400 text-white font-semibold rounded shadow-md",
-    bodyClassName: "text-white",
-    progressClassName: "bg-white",
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agreed) {
+      alert("You must agree to the Terms & Privacy");
+      return;
+    }
+    const success = await signup(form);
+    if (success) {
+      setForm({ name: "", email: "", password: "" });
+      setAgreed(false);
+    }
   };
 
-
-
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!agreed) {
-    toast.error("You must agree to the Terms & Privacy", toastOptions);
-    return;
-  }
-  const success = await signup(form);
-  if (success) {
-    toast.success("Signup successful!", toastOptions);
-    
-  } else {
-    toast.error("Signup failed. Please try again.", toastOptions);
-  }
-};
-
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md w-full mx-auto px-4 sm:px-6">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <LabeledInput
         label="Name"
         name="name"

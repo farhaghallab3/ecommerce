@@ -1,21 +1,18 @@
-import type { ReactNode } from "react";
+// src/components/atoms/Button.tsx
+import React from "react";
 
-type ButtonProps = {
-  className?: string;
-  onClick?: () => void;
-  children?: ReactNode;
-  text?: string;
-  type?: "button" | "submit" | "reset";
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  text: string;
 };
 
-const Button = ({ text, onClick, type = 'submit' }: ButtonProps) => (
-  <button
-    type={type}
-    onClick={onClick}
-    
-  >
-    {text}
-  </button>
-);
-
-export default Button;
+export const Button: React.FC<ButtonProps> = ({ text, disabled, ...props }) => {
+  return (
+    <button
+      disabled={disabled}
+      className={`w-full  bg-emerald-400 py-2 text-white transition hover:bg-emerald-500  disabled:cursor-not-allowed rounded-[16px]`}
+      {...props}
+    >
+      {text}
+    </button>
+  );
+};

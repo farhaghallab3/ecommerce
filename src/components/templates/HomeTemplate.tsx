@@ -26,7 +26,7 @@ import { Footer } from "../organisms/Footer/Footer";
 
 export const HomeTemplate = () => {
   return (
-    <main className="px-4 md:px-12 lg:px-20 py-10 space-y-10 mt-2">
+    <main className="pt-20 px-4 md:px-12 lg:px-20 py-10 space-y-10 mt-2">
       <Header />
       <HeroSection 
         headline="Shop anything from the comfort of your home"
@@ -35,7 +35,6 @@ export const HomeTemplate = () => {
         imageSrc={lading}
         imageAlt="Shop Illustration"
       />
-
       <ProductsGrid 
         categories={[
           { name: "Men’s Fashion", image: men },

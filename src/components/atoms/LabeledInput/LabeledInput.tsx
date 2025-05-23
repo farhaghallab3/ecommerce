@@ -1,17 +1,25 @@
-import { Input } from "../Input/Input";
-
-
+// src/components/molecules/LabeledInput.tsx
 import React from "react";
 
-
-interface LabeledInputProps extends React.ComponentProps<typeof Input> {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-}
+  error?: string;
+};
 
-const LabeledInput: React.FC<LabeledInputProps> = ({ label, ...props }) => (
-  <div className="space-y-1 flex flex-col">
-    <label className="text-sm font-semibold">{label}</label>
-    <Input {...props} />
-  </div>
+const LabeledInput = React.forwardRef<HTMLInputElement, Props>(
+  ({ label, error, ...inputProps }, ref) => (
+    <div>
+      <label className="block mb-1 font-semibold">{label}</label>
+      <input
+        ref={ref}
+        className={`w-full rounded-[16px] bg-transparent border px-3 py-2 outline-none ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
+        {...inputProps}
+      />
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+    </div>
+  )
 );
+
 export default LabeledInput;
