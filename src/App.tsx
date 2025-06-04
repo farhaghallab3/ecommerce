@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 function App() {
 
   return (
-    <BrowserRouter basename='/ecommerce'>
+    <BrowserRouter basename='/'>
   
        <Routes>
         <Route path="/" element={<Home />} />
