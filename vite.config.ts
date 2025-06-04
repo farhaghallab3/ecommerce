@@ -3,16 +3,13 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  base: '/ecommerce/',
   plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-    
   },
   server: {
-  
     proxy: {
       '/api': {
         target: 'https://e-commerce-web-site-ten.vercel.app',
