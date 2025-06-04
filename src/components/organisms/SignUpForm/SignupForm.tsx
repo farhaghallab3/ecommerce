@@ -33,10 +33,11 @@ const SignupForm = () => {
     setErrors({});
 
     try {
-      const response = await axios.post(
-        "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp",
-        formData
-      );
+    await axios.post(
+  "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp",
+  formData
+);
+
       setMessage("Signup successful!");
       return true;
     } catch (error: any) {
