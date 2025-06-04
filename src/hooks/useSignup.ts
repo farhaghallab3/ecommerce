@@ -1,63 +1,59 @@
 // src/hooks/useSignup.ts
-import { useState } from "react";
+import { useState } from 'react';
+import axios from 'axios';
 
-type FormData = {
+export type FormData = {
   name: string;
   email: string;
+  phone: string;
   password: string;
+  passwordConfirmation: string;
 };
 
 export const useSignup = () => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<Partial<FormData>>({});
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const validate = (form: FormData) => {
-    const newErrors: { [key: string]: string } = {};
-    if (!form.name.trim()) newErrors.name = "Name is required";
-    if (!form.email.trim()) newErrors.email = "Email is required";
-    else if (!emailRegex.test(form.email)) newErrors.email = "Email is invalid";
-    if (!form.password) newErrors.password = "Password is required";
-    else if (form.password.length < 8)
-      newErrors.password = "Password must be at least 8 characters";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const signup = async (form: FormData) => {
-    if (!validate(form)) return false;
-
+  const signup = async (form: FormData): Promise<boolean> => {
     setLoading(true);
-    setMessage("");
+    setMessage('');
+    setErrors({});
+
     try {
-      const response = await fetch(
-        "https://e-commerce-web-site-ten.vercel.app/v1/auth/signUp",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await axios.post('https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp', form, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        setMessage("Signup successful! Please check your email.");
-        setErrors({});
+      if (res.data) {
+        setMessage('Signup successful!');
         return true;
-      } else {
-        setMessage(data.message || "Signup failed.");
-        return false;
       }
-    } catch {
-      setMessage("An error occurred. Please try again later.");
-      return false;
+    } catch (err: any) {
+      if (err.response?.data?.errors) {
+        // If backend sends validation errors
+        const apiErrors: Record<string, string> = {};
+        err.response.data.errors.forEach((e: { field: string; message: string }) => {
+          apiErrors[e.field] = e.message;
+        });
+        setErrors(apiErrors);
+      } else {
+        setMessage(err.response?.data?.message || 'Something went wrong');
+      }
     } finally {
       setLoading(false);
     }
+
+    return false;
   };
 
-  return { loading, message, errors, signup };
+  return {
+    signup,
+    loading,
+    message,
+    errors,
+  };
 };

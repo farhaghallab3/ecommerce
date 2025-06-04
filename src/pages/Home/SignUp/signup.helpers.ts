@@ -1,8 +1,8 @@
-import type { SignupFormData } from "./signup.types";
+import type { FormData } from "./signup.types";
 
 
-export const validateSignup = (data: SignupFormData) => {
-  const errors: Partial<SignupFormData> = {};
+export const validateSignup = (data: FormData) => {
+  const errors: Partial<FormData> = {};
 
   if (!data.name.trim()) {
     errors.name = "Name is required";

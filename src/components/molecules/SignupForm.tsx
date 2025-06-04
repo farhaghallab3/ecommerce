@@ -9,7 +9,7 @@ import LabeledPasswordInput from "../atoms/Input/LabeledPasswordInput";
 import { Button } from "../atoms/Button/Button";
 
 const SignupForm = () => {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", passwordConfirmation: "",phone: "" });
   const [agreed, setAgreed] = useState(false);
   const { loading, message, errors, signup } = useSignup();
 
@@ -25,7 +25,7 @@ const SignupForm = () => {
     }
     const success = await signup(form);
     if (success) {
-      setForm({ name: "", email: "", password: "" });
+      setForm({ name: "", email: "", password: "" , passwordConfirmation: "", phone: "" });
       setAgreed(false);
     }
   };
@@ -50,6 +50,15 @@ const SignupForm = () => {
         onChange={handleChange}
         error={errors.email}
       />
+      <LabeledInput
+        label="Phone"
+        name="phone"
+        type="phone"
+        placeholder="Enter your phone number"
+        value={form.phone}
+        onChange={handleChange}
+        error={errors.phone}
+      />
 
       <LabeledPasswordInput
         label="Password"
@@ -58,6 +67,14 @@ const SignupForm = () => {
         value={form.password}
         onChange={handleChange}
         error={errors.password}
+      />
+      <LabeledPasswordInput
+        label="Confirm Password"
+        name="passwordConfirmation"
+        placeholder="Confirm your password"
+        value={form.passwordConfirmation}
+        onChange={handleChange}
+        error={errors.passwordConfirmation}
       />
 
       <div className="text-sm mt-4">
