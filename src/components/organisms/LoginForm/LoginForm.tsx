@@ -18,16 +18,29 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post("https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login", form);
+  e.preventDefault();
+  try {
+    const res = await axios.post(
+      "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login",
+      form
+    );
+
+    if (res.data.required2FA) {
+      // Store tempToken for OTP verification
+      localStorage.setItem("tempToken", res.data.tempToken);
+      localStorage.setItem("email", form.email); // Save email for OTP
+      toast.info("Code sent to your email. Please verify.");
+      navigate("/verify-otp");
+    } else {
       localStorage.setItem("token", res.data.token);
       toast.success("Logged in successfully!");
-      navigate("/"); // go to home
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || "Login failed");
+      navigate("/");
     }
-  };
+  } catch (err: any) {
+    toast.error(err.response?.data?.message || "Login failed");
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">

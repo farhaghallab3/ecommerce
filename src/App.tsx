@@ -6,6 +6,7 @@ import { SignupPage } from "./pages/Home/SignUp/SignupPage";
 
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import VerifyOTP from './pages/VerifyOTP';
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignupPage />} />
          <Route path="/login" element={<LoginForm />} />
+         <Route path="/verify-otp" element={<VerifyOTP />} />
         {/* <Route path="/products" element={<ProductsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />  */}

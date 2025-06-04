@@ -8,7 +8,7 @@ import CheckboxWithLabel from "../../molecules/CheckboxWithLabel";
 import { toast } from "react-toastify";
 
 const SignupForm = () => {
-  const navigate = useNavigate(); // ✅ initialize navigate
+  const navigate = useNavigate(); 
   const [form, setForm] = useState({
     name: "",
     email: "",
