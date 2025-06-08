@@ -1,4 +1,5 @@
-import { useState } from "react";
+// src/components/forms/LoginForm.tsx
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -9,6 +10,8 @@ import LabeledInput from "../../atoms/LabeledInput/LabeledInput";
 import CheckboxWithLabel from "../../molecules/CheckboxWithLabel";
 import GoogleLoginButton from "../../molecules/GoogleLoginButton";
 
+// لا نحتاج useAuth هنا لأننا لا نقوم بتسجيل دخول نهائي في هذه المرحلة
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
@@ -18,29 +21,38 @@ const LoginForm = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  try {
-    const res = await axios.post(
-      "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login",
-      form
-    );
+    e.preventDefault();
+    try {
+      const res = await axios.post(
+        "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login",
+        form
+      );
+      console.log("Login response:", res.data);
 
-    if (res.data.required2FA) {
-      // Store tempToken for OTP verification
-      localStorage.setItem("tempToken", res.data.tempToken);
-      localStorage.setItem("email", form.email); // Save email for OTP
-      toast.info("Code sent to your email. Please verify.");
-      navigate("/verify-otp");
-    } else {
-      localStorage.setItem("token", res.data.token);
-      toast.success("Logged in successfully!");
-      navigate("/");
+      // قم بتخزين البريد الإلكتروني (email) في localStorage
+      // هذا ضروري لـ VerifyOtpForm لاستخدامه في طلب التحقق
+      localStorage.setItem("email", form.email);
+
+      // إذا كان الـ backend يرسل tempToken في هذه المرحلة، قم بتخزينه.
+      // ملاحظة: أنت ذكرت أن الـ backend الخاص بك لا يرسل tempToken هنا.
+      // هذا الـ 'if' سيتجاهل الأمر إذا لم يتم إرساله،
+      // ولكن VerifyOtpForm تم تعديله لعدم الاعتماد عليه للتحويل.
+      if (res.data.tempToken) {
+        localStorage.setItem("tempToken", res.data.tempToken);
+      } else {
+        console.warn(
+          "No tempToken received in login response. VerifyOtpForm is designed to handle this."
+        );
+      }
+
+      toast.info("Proceeding to verification step."); // رسالة للمستخدم
+      navigate("/verify-otp"); // دائماً حول المستخدم لصفحة التحقق
+
+    } catch (err: any) {
+      console.error("Login error:", err.response?.data);
+      toast.error(err.response?.data?.message || "Login failed");
     }
-  } catch (err: any) {
-    toast.error(err.response?.data?.message || "Login failed");
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4">

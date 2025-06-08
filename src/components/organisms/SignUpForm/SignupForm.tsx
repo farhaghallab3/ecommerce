@@ -1,14 +1,18 @@
+// signup:
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../atoms/Button/Button";
 import LabeledPasswordInput from "../../atoms/Input/LabeledPasswordInput";
 import LabeledInput from "../../atoms/LabeledInput/LabeledInput";
 import CheckboxWithLabel from "../../molecules/CheckboxWithLabel";
 import { toast } from "react-toastify";
+import { useAuth } from "../../../context/AuthContext";
+
 
 const SignupForm = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const { login } = useAuth(); // Use the login function from context
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -33,17 +37,17 @@ const SignupForm = () => {
     setErrors({});
 
     try {
-    await axios.post(
-  "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp",
-  formData
-);
+      await axios.post(
+        "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp",
+        formData
+      );
 
       setMessage("Signup successful!");
       return true;
     } catch (error: any) {
-      const apiErrors = error.response?.data?.errors;
-
-      if (apiErrors && Array.isArray(apiErrors)) {
+console.error("Signup error:", error.response);
+    const apiErrors = error.response?.data?.errors;
+    if (apiErrors && Array.isArray(apiErrors)) {
         const formattedErrors: Record<string, string> = {};
         apiErrors.forEach((err: any) => {
           if (err.param) {
@@ -56,6 +60,7 @@ const SignupForm = () => {
       }
 
       return false;
+
     } finally {
       setLoading(false);
     }
@@ -72,38 +77,41 @@ const SignupForm = () => {
     progressClassName: "bg-white",
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!agreed) {
-    toast.error("You must agree to the Terms & Privacy", toastOptions);
-    return;
-  }
-
-  const success = await signup(form);
-  if (success) {
-    toast.success("Signup successful!", toastOptions);
-
-    // ✅ login user immediately
-    try {
-      const res = await axios.post("https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login", {
-        email: form.email,
-        password: form.password,
-      });
-
-      // Store token/user info (depends on what your backend returns)
-      localStorage.setItem("token", res.data.token); // example
-      // Redirect to home or dashboard
-      navigate("/"); // or "/dashboard"
-    } catch (err: any) {
-      toast.error("Signup succeeded but auto-login failed", toastOptions);
-      navigate("/login"); // fallback
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!agreed) {
+      toast.error("You must agree to the Terms & Privacy", toastOptions);
+      return;
     }
 
-  } else {
-    toast.error("Signup failed. Please try again.", toastOptions);
-  }
-};
+    const success = await signup(form);
+    if (success) {
+      toast.success("Signup successful!", toastOptions);
 
+      // Login user immediately
+      try {
+        const res = await axios.post(
+          "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login",
+          {
+            email: form.email,
+            password: form.password,
+          }
+        );
+        console.log("Login response:", res.data);
+
+        // Assuming your backend returns user name on login
+        // Make sure `res.data.user.name` contains the user's name
+        const userName = res.data.user.name; // Adjust this based on your API response structure
+        login(res.data.token, userName); // Call login from context
+        navigate("/");
+      } catch (err: any) {
+        toast.error("Signup succeeded but auto-login failed", toastOptions);
+        navigate("/login"); // fallback
+      }
+    } else {
+      toast.error("Signup failed. Please try again.", toastOptions);
+    }
+  };
 
   return (
     <form
