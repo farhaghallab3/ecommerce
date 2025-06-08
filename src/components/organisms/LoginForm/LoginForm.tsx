@@ -10,7 +10,7 @@ import LabeledInput from "../../atoms/LabeledInput/LabeledInput";
 import CheckboxWithLabel from "../../molecules/CheckboxWithLabel";
 import GoogleLoginButton from "../../molecules/GoogleLoginButton";
 
-// لا نحتاج useAuth هنا لأننا لا نقوم بتسجيل دخول نهائي في هذه المرحلة
+
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -29,24 +29,19 @@ const LoginForm = () => {
       );
       console.log("Login response:", res.data);
 
-      // قم بتخزين البريد الإلكتروني (email) في localStorage
-      // هذا ضروري لـ VerifyOtpForm لاستخدامه في طلب التحقق
+
       localStorage.setItem("email", form.email);
 
-      // إذا كان الـ backend يرسل tempToken في هذه المرحلة، قم بتخزينه.
-      // ملاحظة: أنت ذكرت أن الـ backend الخاص بك لا يرسل tempToken هنا.
-      // هذا الـ 'if' سيتجاهل الأمر إذا لم يتم إرساله،
-      // ولكن VerifyOtpForm تم تعديله لعدم الاعتماد عليه للتحويل.
-      if (res.data.tempToken) {
-        localStorage.setItem("tempToken", res.data.tempToken);
+      if (res.data.token) {
+        localStorage.setItem("tempToken", res.data.token); 
       } else {
         console.warn(
           "No tempToken received in login response. VerifyOtpForm is designed to handle this."
         );
       }
 
-      toast.info("Proceeding to verification step."); // رسالة للمستخدم
-      navigate("/verify-otp"); // دائماً حول المستخدم لصفحة التحقق
+      toast.info("Proceeding to verification step."); 
+      navigate("/verify-otp"); 
 
     } catch (err: any) {
       console.error("Login error:", err.response?.data);

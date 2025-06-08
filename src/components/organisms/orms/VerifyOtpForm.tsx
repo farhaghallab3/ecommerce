@@ -5,28 +5,27 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button } from "../../atoms/Button/Button";
 import LabeledInput from "../../atoms/LabeledInput/LabeledInput";
-import { useAuth } from "../../../context/AuthContext"; // استورد useAuth هنا
+import { useAuth } from "../../../context/AuthContext";
 
 const VerifyOtpForm = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // استخدم دالة login من AuthContext هنا
+  const { login, isAuthenticated } = useAuth(); // <<-- Get isAuthenticated here
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const email = localStorage.getItem("email");
-  // ملاحظة: لا نعتمد على 'tempToken' في هذا الـ useEffect لتجنب التحويل غير المرغوب فيه
-  // إذا كان الـ backend لا يرسله في استجابة /login الأولية.
 
   useEffect(() => {
-    // إذا لم يتم العثور على بريد إلكتروني، قم بتحويل المستخدم إلى صفحة تسجيل الدخول.
-    // هذا يمنع الوصول المباشر لهذه الصفحة دون محاولة تسجيل دخول سابقة.
-    if (!email) {
-      console.log("Email is null or undefined, redirecting to /login.");
+    console.log("VerifyOtpForm loaded. Email from localStorage:", email, "isAuthenticated:", isAuthenticated);
+    // Only redirect if email is missing AND user is NOT already authenticated
+    if (!email && !isAuthenticated) { // <<-- CHANGED THIS LINE
+      console.log("Email is null or undefined in VerifyOtpForm useEffect, and not authenticated, redirecting to /login.");
+      console.trace("Redirect from VerifyOtpForm useEffect: Email missing and user not authenticated.");
       toast.error("No email found for verification. Please try logging in again.");
       navigate("/login");
     }
-  }, [email, navigate]); // يعتمد فقط على 'email' و 'navigate'
+  }, [email, isAuthenticated, navigate]); // <<-- Add isAuthenticated to dependencies
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,40 +43,36 @@ const VerifyOtpForm = () => {
         "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/verify-2FA",
         {
           email: email,
-          OTP: otp, // تأكد أن هذا يطابق الحقل المتوقع لـ OTP في الـ backend الخاص بك
+          OTP: otp,
         }
-        // بناءً على لقطات شاشة Postman الخاصة بك، لا يتطلب هذا المسار
-        // Authorization header يحتوي على tempToken.
       );
 
       console.log("Verify OTP response:", res.data);
 
-      // استخرج الـ token واسم المستخدم من استجابة /verify-2FA
-      // بناءً على لقطة شاشة Postman، الاسم موجود تحت 'data.name'
       const token = res.data.token;
-      const userName = res.data.data.name; // تأكد من المسار الصحيح للاسم هنا
+      const userName = res.data.data.name;
 
       if (token && userName) {
-        login(token, userName); // قم بتسجيل الدخول الفعلي باستخدام AuthContext
-        localStorage.removeItem("email"); // امسح البريد الإلكتروني المؤقت بعد تسجيل الدخول
-        // localStorage.removeItem("tempToken"); // لا حاجة للمسح إذا لم نقم بتخزينه بشكل ثابت
-
+        login(token, userName);
+        // localStorage.removeItem("email"); // <<-- MAKE SURE THIS LINE IS COMMENTED/REMOVED
         toast.success("Verification successful. You are now logged in!");
-        navigate("/"); // حول المستخدم إلى الصفحة الرئيسية
+        console.log("Attempting to navigate to home page from VerifyOtpForm...");
+        navigate("/");
+        console.log("Navigation to home page initiated from VerifyOtpForm.");
       } else {
         setError("Verification failed: Missing token or user data in response.");
       }
     } catch (err: any) {
       console.error("OTP verification error:", err.response?.data);
       setError(err.response?.data?.message || "OTP verification failed.");
+      console.trace("Redirect from VerifyOtpForm catch: OTP verification failed.");
     } finally {
       setLoading(false);
     }
   };
 
-  // إذا لم يكن هناك بريد إلكتروني، لا تعرض أي شيء أو أظهر مؤشر تحميل أثناء التحويل
-  if (!email) {
-    return null;
+  if (!email && !isAuthenticated) { // <<-- Add isAuthenticated check here too for initial render
+    return null; // Don't render if email is missing and not authenticated
   }
 
   return (

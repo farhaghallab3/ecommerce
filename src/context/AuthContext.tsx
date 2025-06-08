@@ -1,11 +1,12 @@
 // src/context/AuthContext.tsx
-import {
+import  {
   createContext,
   useState,
   useEffect,
   useContext,
-  type ReactNode,
+  type ReactNode, 
 } from "react";
+import { useNavigate } from "react-router-dom"; 
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -14,16 +15,15 @@ interface AuthContextType {
   logout: () => void;
 }
 
-// إنشاء الـ Context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Provider Component لتوفير الـ Context لباقي التطبيق
+// قم بتعديل تعريف الـ props هنا
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // عند تحميل التطبيق، تحقق من وجود token واسم مستخدم في localStorage
     const token = localStorage.getItem("token");
     const storedUserName = localStorage.getItem("userName");
 
@@ -31,9 +31,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsAuthenticated(true);
       setUserName(storedUserName);
     }
-  }, []); // [] يعني هذا الـ effect سيعمل مرة واحدة فقط عند تحميل الـ component
+  }, []);
 
-  // دالة تسجيل الدخول: تخزن الـ token واسم المستخدم
   const login = (token: string, name: string) => {
     localStorage.setItem("token", token);
     localStorage.setItem("userName", name);
@@ -41,12 +40,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserName(name);
   };
 
-  // دالة تسجيل الخروج: تحذف الـ token واسم المستخدم
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
     setIsAuthenticated(false);
     setUserName(null);
+    console.trace("Redirect from AuthContext logout.");
+    navigate("/login");
   };
 
   return (
@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook مخصص لسهولة استخدام الـ Context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
