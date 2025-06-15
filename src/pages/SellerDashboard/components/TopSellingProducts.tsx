@@ -1,5 +1,4 @@
-// src/pages/SellerDashboard/components/TopSellingProducts.tsx
-import React from 'react';
+
 import ProductOverviewCard from '../../../components/molecules/ProductOverviewCard'; // Adjust path
 
 const TopSellingProducts = () => {

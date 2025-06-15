@@ -1,5 +1,4 @@
-// src/pages/SellerDashboard/components/LatestOrdersTable.tsx
-import React from 'react';
+
 
 interface Order {
   id: string;

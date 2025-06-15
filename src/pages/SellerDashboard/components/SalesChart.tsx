@@ -1,7 +1,4 @@
-// src/pages/SellerDashboard/components/SalesChart.tsx
-import React from 'react';
-// You would use a charting library here, e.g., Chart.js, Recharts, Nivo
-// For simplicity, just a placeholder div.
+
 
 const SalesChart = () => {
   // Data for the chart would be fetched here or passed as props
