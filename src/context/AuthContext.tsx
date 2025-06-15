@@ -11,7 +11,8 @@ import { useNavigate } from "react-router-dom";
 interface AuthContextType {
   isAuthenticated: boolean;
   userName: string | null;
-  login: (token: string, name: string) => void;
+  userEmail: string | null;
+  login: (token: string, name: string, email: string) => void;
   logout: () => void;
 }
 
@@ -21,36 +22,43 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userName, setUserName] = useState<string | null>(null);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUserName = localStorage.getItem("userName");
+    const storedUserEmail = localStorage.getItem("userEmail");
 
     if (token && storedUserName) {
       setIsAuthenticated(true);
       setUserName(storedUserName);
+      setUserEmail(storedUserEmail);
     }
   }, []);
 
-  const login = (token: string, name: string) => {
+  const login = (token: string, name: string, email: string) => {
     localStorage.setItem("token", token);
     localStorage.setItem("userName", name);
+    localStorage.setItem("userEmail", email);
     setIsAuthenticated(true);
     setUserName(name);
+    setUserEmail(email);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
+    localStorage.removeItem("userEmail");
     setIsAuthenticated(false);
     setUserName(null);
+    setUserEmail(null);
     console.trace("Redirect from AuthContext logout.");
     navigate("/login");
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userName, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userName, login, logout, userEmail }}>
       {children}
     </AuthContext.Provider>
   );

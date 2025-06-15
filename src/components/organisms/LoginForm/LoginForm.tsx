@@ -8,7 +8,7 @@ import { Button } from "../../atoms/Button/Button";
 import Divider from "../../atoms/Divider";
 import LabeledInput from "../../atoms/LabeledInput/LabeledInput";
 import CheckboxWithLabel from "../../molecules/CheckboxWithLabel";
-import GoogleLoginButton from "../../molecules/GoogleLoginButton";
+import GoogleButton from "../../molecules/GoogleButton";
 
 
 
@@ -56,7 +56,7 @@ const LoginForm = () => {
         onSubmit={handleSubmit}
       >
         <h1 className="text-2xl font-bold text-center">Welcome Back</h1>
-        <GoogleLoginButton />
+        <GoogleButton />
         <Divider text="Or" />
 
         <LabeledInput

@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 import { AuthProvider } from "./context/AuthContext";
-import VerifyOtpForm from "./components/organisms/orms/VerifyOtpForm";
+import VerifyOtpForm from "./components/organisms/Forms/VerifyOtpForm";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import SellerDashboardPage from "./pages/SellerDashboard";
 
 
 
@@ -16,6 +18,7 @@ import VerifyOtpForm from "./components/organisms/orms/VerifyOtpForm";
 function App() {
 
   return (
+     <GoogleOAuthProvider clientId="10402982650-mib55r6gp857j7gjc40tvbqnsr009k8f.apps.googleusercontent.com">
     <BrowserRouter basename='/'>
       <AuthProvider>
   
@@ -24,6 +27,7 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
          <Route path="/login" element={<LoginForm />} />
          <Route path="/verify-otp" element={<VerifyOtpForm />} />
+         <Route path="/seller-dashboard" element={<SellerDashboardPage />} />
         {/* <Route path="/products" element={<ProductsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />  */}
@@ -47,6 +51,7 @@ function App() {
 
   </AuthProvider>
     </BrowserRouter>
+  </GoogleOAuthProvider >
   );
 }
 

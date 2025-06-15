@@ -26,7 +26,7 @@ const SignupForm = () => {
 
   // Helper function for client-side validation
   const validateForm = () => {
-    let newErrors: Record<string, string> = {};
+    const newErrors: Record<string, string> = {};
     let isValid = true;
 
     // Name validation
@@ -179,18 +179,23 @@ const SignupForm = () => {
 
         // Assuming your backend returns user name on login via res.data.user.name or res.data.data.name
         let userName: string;
-        if (res.data.user && res.data.user.name) {
+        let userEmail: string;
+        if (res.data.user && res.data.user.name && res.data.user.email) {
+            userEmail = res.data.user.email;
             userName = res.data.user.name;
-        } else if (res.data.data && res.data.data.name) {
+        } else if (res.data.data && res.data.data.name && res.data.data.email) {
+            userEmail = res.data.data.email;
             userName = res.data.data.name;
-        } else if (res.data.name) { // Fallback if name is directly at root
+        } else if (res.data.name && res.data.email) { // Fallback if name is directly at root
             userName = res.data.name;
+            userEmail = res.data.email;
         } else {
             console.warn("User name not found in login response after signup.");
             userName = form.name || "User"; // Use the name from the signup form itself as a fallback
+            userEmail = form.email; // Use the email from the signup form
         }
 
-        login(res.data.token, userName); // Call login from context
+        login(res.data.token, userName , userEmail); // Call login from context
         navigate("/"); // Navigate to home page
       } catch (err: any) {
         console.error("Auto-login error after signup:", err.response);

@@ -18,7 +18,7 @@ export const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-5 gap-8 max-w-7xl mx-auto">
         {/* Brand Column */}
         <div className="md:col-span-1">
-          <h3 className="text-lg font-bold mb-2">TrueCart</h3>
+          <h3 className="text-[40px] font-bold mb-2">TrueCart</h3>
 
           <div className=" mt-10 pt-40 flex items-center  gap-1 " >
             <img src={Facebook} alt="Facebook" className="w-5 h-5 hover:opacity-75 transition-opacity" />

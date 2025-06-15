@@ -1,6 +1,6 @@
 
 import Divider from "../../../components/atoms/Divider";
-import GoogleLoginButton from "../../../components/molecules/GoogleLoginButton";
+import GoogleButton from "../../../components/molecules/GoogleButton";
 import SignupForm from "../../../components/organisms/SignUpForm/SignupForm";
 
 
@@ -9,7 +9,7 @@ const Signup = () => {
     <div className="w-full flex items-center justify-center">
       <div className="w-full max-w-sm">
         <h1 className="text-2xl font-bold text-center mb-6">Create an Account</h1>
-        <GoogleLoginButton />
+        <GoogleButton />
         <Divider text="Or" />
         <SignupForm />
         </div>

@@ -7,11 +7,11 @@ export const NewsletterForm = () => (
     <Input
       type="email"
       placeholder="Your E-Mail"
-      className="border-none rounded-none px-4 py-2 w-full"
+      className="border-none bg-transparent rounded-none px-4 py-2 w-full"
     />
     <button
       type="submit"
-      className=" bg-[#20C997] rounded-[10px]   p-2 text-white flex items-center justify-center mr-3"
+      className=" bg-[#20C997] rounded-[10px]   p-2 text-white flex items-center justify-center mr-1"
     >
       <ArrowRight className="w-4 h-4" />
     </button>
