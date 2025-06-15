@@ -19,7 +19,7 @@ const GoogleButton = () => {
     try {
 
       const backendRes = await axios.post(
-        "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/google-login", 
+        "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp-google", 
         { googleAccessToken: tokenResponse.access_token } 
 
       );
