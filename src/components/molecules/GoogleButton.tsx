@@ -41,11 +41,10 @@ const GoogleButton = () => {
     <GoogleLogin
       onSuccess={handleSuccess}
       onError={handleError}
-      width="100%"
       size="medium"
       shape="rectangular"
       text="signin_with"
-      useOneTap
+    
     />
   );
 };
