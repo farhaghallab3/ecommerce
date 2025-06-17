@@ -13,13 +13,13 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import SellerDashboardPage from "./pages/SellerDashboard";
 
-
+const Clint_ID = "10402982650-mib55r6gp857j7gjc40tvbqnsr009k8f.apps.googleusercontent.com";
 
 
 function App() {
 
   return (
-     <GoogleOAuthProvider clientId="10402982650-mib55r6gp857j7gjc40tvbqnsr009k8f.apps.googleusercontent.com">
+     <GoogleOAuthProvider clientId={Clint_ID}>
     <BrowserRouter basename='/'>
       <AuthProvider>
   
