@@ -1,18 +1,27 @@
-import { FooterLink } from "../../atoms/Footer/FooterLink";
-import { FooterTitle } from "../../atoms/Footer/FooterTitle";
-
+// src/components/molecules/FooterColumn.tsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface FooterColumnProps {
   title: string;
-  links: string[];
+  links: { label: string; to: string }[];
 }
 
-export const FooterColumn = ({ title, links }: FooterColumnProps) => (
-  <div>
-    
-    <FooterTitle title={title} />
-    {links.map((link, i) => (
-      <FooterLink key={i} label={link} />
-    ))}
-  </div>
-);
+const FooterColumn: React.FC<FooterColumnProps> = ({ title, links }) => {
+  return (
+    <div>
+      <h3 className="text-white font-semibold text-lg mb-4">{title}</h3>
+      <ul className="space-y-2">
+        {links.map((link, index) => (
+          <li key={index}>
+            <Link to={link.to} className="text-gray-400 hover:text-emerald-500 transition-colors text-sm">
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default FooterColumn;

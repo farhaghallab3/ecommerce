@@ -1,0 +1,72 @@
+.topBar {
+  background: #222;
+  color: #fff;
+  padding: 6px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.topRight {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.mainBar {
+  background: #fff;
+  padding: 18px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  flex: 1;
+}
+.search {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.searchInput {
+  width: 70%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+.searchButton {
+  padding: 8px 18px;
+  background: #22c55e;
+  color: #fff;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  font-weight: bold;
+  cursor: pointer;
+}
+.mainRight {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+.navBar {
+  background: #fff;
+  padding: 8px 32px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  border-bottom: 1px solid #eee;
+}
+.navBar a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+}
+.navBar .active {
+  color: #22c55e;
+}
+.dropdown {
+  position: relative;
+  cursor: pointer;
+}

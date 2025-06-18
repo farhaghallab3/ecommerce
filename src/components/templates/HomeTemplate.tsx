@@ -17,8 +17,9 @@ import skincare from "../../assets/images/skincare.png";
 import watches from "../../assets/images/wearable.png";
 import laptop from "../../assets/images/laptop.jpeg";
 import footwear from "../../assets/images/footwear.jpeg";
-import { Header } from "../organisms/Header/Header";
-import { Footer } from "../organisms/Footer/Footer";
+
+
+
 
 
 
@@ -27,7 +28,7 @@ import { Footer } from "../organisms/Footer/Footer";
 export const HomeTemplate = () => {
   return (
     <main className="pt-20 px-4 md:px-12 lg:px-20 py-10 space-y-10 mt-2">
-      <Header />
+      
       <HeroSection 
         headline="Shop anything from the comfort of your home"
         ctaText="Browse Products"
@@ -55,7 +56,7 @@ export const HomeTemplate = () => {
           { name: "Footwear", image: footwear },
         ]}
       />
-      <Footer />
+    
     </main>
   );
 };
