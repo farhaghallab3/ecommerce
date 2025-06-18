@@ -6,7 +6,7 @@ interface HeaderCartInfoProps {
   total: number;
 }
 
-const HeaderCartInfo: React.FC<HeaderCartInfoProps> = ({ itemCount, total }) => {
+const HeaderCartInfo: React.FC<HeaderCartInfoProps> = ({  total }) => {
   return (
     <div className="flex items-center cursor-pointer hover:text-emerald-600">
       <ShoppingBag className="w-8 h-8 text-gray-700 mr-2" />
