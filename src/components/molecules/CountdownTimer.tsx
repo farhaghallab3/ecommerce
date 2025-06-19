@@ -7,9 +7,16 @@ interface CountdownTimerProps {
 }
 
 const CountdownTimer: FC<CountdownTimerProps> = ({ targetDate, textColorClass = 'text-gray-800' }) => {
-  const calculateTimeLeft = () => {
+  interface TimeLeft {
+    days: number;
+    hours: number;
+    minutes: number;
+    seconds: number;
+  }
+
+  const calculateTimeLeft = (): TimeLeft => {
     const difference = +new Date(targetDate) - +new Date();
-    let timeLeft = {};
+    let timeLeft: TimeLeft;
 
     if (difference > 0) {
       timeLeft = {
