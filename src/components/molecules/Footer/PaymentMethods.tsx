@@ -1,9 +1,9 @@
 import React from 'react';
-import ApplePay from '../../../assets/images/ApplePay.png';   
-import Discover from '../../../assets/images/Discover.png';
-import MasterCard from '../../../assets/images/MasterCard.png';
-import Visa from '../../../assets/images/Visa.png';
-import payment from '../../../assets/images/Cart.png'; 
+import ApplePay from '/src/assets/images/ApplePay.png';   
+import Discover from '/src/assets/images/Discover.png';
+import MasterCard from '/src/assets/images/MasterCard.png';
+import Visa from '/src/assets/images/Visa.png';
+import payment from '/src/assets/images/Cart.png'; 
 
 const PaymentMethods: React.FC = () => {
   const paymentLogos = [
