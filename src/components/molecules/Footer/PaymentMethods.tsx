@@ -8,6 +8,7 @@ import payment from '/src/assets/images/Cart.png';
 const PaymentMethods: React.FC = () => {
   const paymentLogos = [
     ApplePay,
+    
     Discover,
     MasterCard,
     Visa,
