@@ -1,5 +1,4 @@
-// src/components/molecules/HeaderProfileActions.tsx
-import React from 'react';
+
 import { Heart } from 'lucide-react';
 import HeaderCartInfo from './HeaderCartInfo'; // Adjust path if necessary
 

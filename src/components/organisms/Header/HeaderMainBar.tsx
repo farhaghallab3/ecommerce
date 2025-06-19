@@ -1,6 +1,6 @@
 // src/components/organisms/HeaderMainBar.tsx
 import { Search } from 'lucide-react';
-import React from 'react';
+
 import { Button } from '../../atoms/Button/Button';
 import { Input } from '../../atoms/Input/Input';
 import { Logo } from '../../atoms/Logo/Logo';

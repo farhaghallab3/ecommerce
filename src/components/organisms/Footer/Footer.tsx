@@ -1,5 +1,4 @@
-// src/components/organisms/Footer.tsx
-import React from 'react';
+
 import FooterNewsletter from './FooterNewsletter';
 import FooterMainContent from './FooterMainContent';
 import FooterCopyright from './FooterCopyright';

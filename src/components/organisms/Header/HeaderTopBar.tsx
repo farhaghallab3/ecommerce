@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { MapPin } from 'lucide-react';
 import HeaderTopInfo from '../../molecules/Header/HeaderTopInfo';
 

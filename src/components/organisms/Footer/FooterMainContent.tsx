@@ -1,5 +1,4 @@
-// src/components/organisms/FooterMainContent.tsx
-import React from 'react';
+
 import { Phone, Mail } from 'lucide-react';
 import { Logo } from '../../atoms/Logo/Logo';
 import FooterColumn from '../../molecules/Footer/FooterColumn';

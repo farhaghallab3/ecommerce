@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import { useState, forwardRef } from "react";
 import { Eye, EyeOff } from "lucide-react"; // Using lucide-react icons
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {

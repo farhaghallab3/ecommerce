@@ -1,5 +1,4 @@
-// src/components/molecules/FooterColumn.tsx
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 interface FooterColumnProps {

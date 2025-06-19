@@ -1,7 +1,7 @@
-// src/components/molecules/Breadcrumbs.tsx
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Home as HomeIcon, ChevronRight } from 'lucide-react';
+
+import {  Fragment, type FC } from 'react'; // <--- Corrected import: Import FC and Fragment directly
 
 // REMOVED: import BreadcrumbsBg from '../../assets/images/breadcrumbs_bg.jpg'; // No longer needed
 
@@ -10,7 +10,7 @@ interface BreadcrumbItem {
   path: string;
 }
 
-const Breadcrumbs: React.FC = () => {
+const Breadcrumbs: FC = () => { // Using FC type
   const location = useLocation();
   const pathnames = location.pathname.split('/').filter(x => x);
 
@@ -36,31 +36,25 @@ const Breadcrumbs: React.FC = () => {
   });
 
   return (
-    // Reverted to a simple gray background and adjusted padding
     <div
-      className="bg-gray-100 py-3" // Simple light gray background
-      // REMOVED: style={{ backgroundImage: `url(${BreadcrumbsBg})` }}
+      className="bg-gray-100 py-3"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center text-sm">
-        {/* Home link - now dark gray text for light background */}
         <Link to="/" className="flex items-center text-gray-700 hover:text-emerald-600 transition-colors">
-          <HomeIcon className="w-4 h-4 mr-1 text-gray-500" /> {/* Icon also dark gray */}
+          <HomeIcon className="w-4 h-4 mr-1 text-gray-500" />
           Home
         </Link>
         {breadcrumbs.map((crumb, index) => (
-          <React.Fragment key={crumb.path}>
-            {/* Separator - now dark gray */}
+          <Fragment key={crumb.path}> {/* Changed to Fragment from React.Fragment */}
             <ChevronRight className="w-4 h-4 mx-2 text-gray-400" />
             {index === breadcrumbs.length - 1 ? (
-              // Current page - now emerald green text (as it's the active page)
               <span className="text-emerald-600 font-semibold">{crumb.label}</span>
             ) : (
-              // Intermediate pages - now dark gray links
               <Link to={crumb.path} className="text-gray-700 hover:text-emerald-600 transition-colors">
                 {crumb.label}
               </Link>
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     </div>

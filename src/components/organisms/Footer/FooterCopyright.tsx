@@ -1,5 +1,4 @@
-// src/components/organisms/FooterCopyright.tsx
-import React from 'react';
+
 import PaymentMethods from '../../molecules/Footer/PaymentMethods';
 
 

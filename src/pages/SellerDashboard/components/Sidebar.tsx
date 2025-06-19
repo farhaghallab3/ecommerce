@@ -1,5 +1,4 @@
-// src/pages/SellerDashboard/components/Sidebar.tsx
-import React from 'react';
+
 import { Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Package, Users, ShoppingCart, Truck, Settings, Handshake, MessageSquare, HelpCircle } from 'lucide-react';
 

@@ -1,8 +1,7 @@
-// src/pages/SellerDashboard/components/DashboardHeader.tsx
-import React from 'react';
+
 import { Search, Mic, ChevronDown } from 'lucide-react'; // <-- Import Mic and ChevronDown icons
 import { useAuth } from '../../../context/AuthContext'; // <-- Import useAuth
-import profile from '../../../assets/images/manprofile.png'; // <-- Import profile image if needed
+
 
 interface DashboardHeaderProps {
    userName: string; // We will get userName and userEmail directly from AuthContext now
@@ -27,7 +26,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = () => { // Removed props
 
       {/* User profile on the right */}
       <div className="flex items-center space-x-2 flex-shrink-0">
-        <img src={profile} alt="User Avatar" className="w-10 h-10 rounded-full mr-2" />
+        <img src="" alt="User Avatar" className="w-10 h-10 rounded-full mr-2" />
         <div className="flex flex-col text-sm leading-tight">
           <p className="font-semibold text-gray-800">{userName || 'User'}</p> {/* Display userName */}
           <p className="text-gray-500">{userEmail || 'email@example.com'}</p> {/* Display userEmail */}

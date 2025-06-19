@@ -1,5 +1,4 @@
-// src/components/atoms/Logo.tsx
-import React from 'react';
+
 import plant from '/src/assets/Icons/plant.png'; // Assuming this path is correct for your plant icon
 
 interface LogoProps {

@@ -1,5 +1,4 @@
-// src/components/organisms/FooterNewsletter.tsx
-import React from 'react';
+
 import NewsletterForm from '../../molecules/Footer/NewsletterForm';
 import SocialMediaIcons from '../../molecules/Footer/SocialMediaIcons';
 
