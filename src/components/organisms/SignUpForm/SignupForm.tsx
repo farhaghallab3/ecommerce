@@ -43,7 +43,6 @@ const SignupForm = () => {
       newErrors.email = "Email is required.";
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      // Basic email regex
       newErrors.email = "Invalid email format.";
       isValid = false;
     }
@@ -53,7 +52,6 @@ const SignupForm = () => {
       newErrors.phone = "Phone number is required.";
       isValid = false;
     } else if (!/^[0-9]{11}$/.test(form.phone)) {
-      // Exactly 11 digits
       newErrors.phone = "Phone number must be exactly 11 digits.";
       isValid = false;
     }
@@ -70,7 +68,6 @@ const SignupForm = () => {
         form.password
       )
     ) {
-      // At least one uppercase letter, one lowercase letter, one digit, and one special character
       newErrors.password =
         "Password must contain at least one uppercase, one lowercase, one digit, and one special character.";
       isValid = false;
@@ -85,7 +82,7 @@ const SignupForm = () => {
       isValid = false;
     }
 
-    setErrors(newErrors); // Update the errors state
+    setErrors(newErrors);
     return isValid;
   };
 
@@ -97,11 +94,11 @@ const SignupForm = () => {
     passwordConfirmation: string;
   }) => {
     setLoading(true);
-    setMessage(""); // Clear general messages
-    setErrors({}); // Clear previous errors from a potential failed backend call
+    setMessage("");
+    setErrors({});
 
     try {
-      await axios.post(
+      const res = await axios.post(
         "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp",
         formData
       );
@@ -118,9 +115,9 @@ const SignupForm = () => {
             formattedErrors[err.param] = err.msg;
           }
         });
-        setErrors(formattedErrors); // Set backend validation errors
+        setErrors(formattedErrors);
       } else {
-        setMessage(error.response?.data?.message || "Signup failed."); // Set general backend errors
+        setMessage(error.response?.data?.message || "Signup failed.");
       }
 
       return false;
@@ -131,7 +128,6 @@ const SignupForm = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    // Optional: Clear error for the specific field as user types
     if (errors[e.target.name]) {
       setErrors((prevErrors) => ({ ...prevErrors, [e.target.name]: "" }));
     }
@@ -147,7 +143,6 @@ const SignupForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Perform client-side validation first
     const formIsValid = validateForm();
 
     if (!agreed) {
@@ -156,17 +151,14 @@ const SignupForm = () => {
     }
 
     if (!formIsValid) {
-      // If client-side validation fails, do not proceed to API call
       toast.error("Please correct the errors in the form.", toastOptions);
       return;
     }
 
-    // If client-side validation passes, proceed to backend signup
     const success = await signup(form);
     if (success) {
       toast.success("Signup successful!", toastOptions);
 
-      // Login user immediately after successful signup
       try {
         const res = await axios.post(
           "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/login",
@@ -177,127 +169,136 @@ const SignupForm = () => {
         );
         console.log("Login response after signup:", res.data);
 
-        // Assuming your backend returns user name on login via res.data.user.name or res.data.data.name
         let userName: string;
         let userEmail: string;
         if (res.data.user && res.data.user.name && res.data.user.email) {
-            userEmail = res.data.user.email;
-            userName = res.data.user.name;
+          userEmail = res.data.user.email;
+          userName = res.data.user.name;
         } else if (res.data.data && res.data.data.name && res.data.data.email) {
-            userEmail = res.data.data.email;
-            userName = res.data.data.name;
-        } else if (res.data.name && res.data.email) { // Fallback if name is directly at root
-            userName = res.data.name;
-            userEmail = res.data.email;
+          userEmail = res.data.data.email;
+          userName = res.data.data.name;
+        } else if (res.data.name && res.data.email) {
+          userName = res.data.name;
+          userEmail = res.data.email;
         } else {
-            console.warn("User name not found in login response after signup.");
-            userName = form.name || "User"; // Use the name from the signup form itself as a fallback
-            userEmail = form.email; // Use the email from the signup form
+          console.warn("User name not found in login response after signup.");
+          userName = form.name || "User";
+          userEmail = form.email;
         }
 
-        login(res.data.token, userName , userEmail); // Call login from context
-        navigate("/"); // Navigate to home page
+        login(res.data.token, userName, userEmail);
+        navigate("/");
       } catch (err: any) {
         console.error("Auto-login error after signup:", err.response);
         toast.error("Signup succeeded but auto-login failed. Please try logging in manually.", toastOptions);
-        navigate("/login"); // fallback to manual login
+        navigate("/login");
       }
     } else {
-      // If backend signup failed, the errors state would already be set by the signup function
       toast.error("Signup failed. Please check the form errors.", toastOptions);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 max-w-md w-full mx-auto px-4 sm:px-6"
-    >
-      <LabeledInput
-        label="Name"
-        name="name"
-        placeholder="Enter your name"
-        value={form.name}
-        onChange={handleChange}
-        error={errors.name} // Display error message here
-      />
+    // Outer container for centering and background
+    <div className="min-h-screen w-full flex items-center justify-center  py-12 px-4 sm:px-6 lg:px-8 mt-10 ">
+      {/* Form container with white background and shadow */}
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md w-full  p-6 rounded-lg shadow-lg space-y-2"
+          style={{
+          // Custom style for the green border effect as seen in the image
+          boxShadow: '0 0 0 #00B207, 0 8px 16px rgba(0,0,0,0.2)' // Inner shadow + outer green glow
+        }} // Adjusted spacing and padding
+      >
+        <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">Create Account</h2> {/* Added heading */}
 
-      <LabeledInput
-        label="Email"
-        name="email"
-        type="email"
-        placeholder="Enter your email"
-        value={form.email}
-        onChange={handleChange}
-        error={errors.email} // Display error message here
-      />
-      <LabeledInput
-        label="Phone"
-        name="phone"
-        type="tel"
-        placeholder="Enter your phone number"
-        value={form.phone}
-        onChange={handleChange}
-        error={errors.phone} // Display error message here
-      />
-
-      <LabeledPasswordInput
-        label="Password"
-        name="password"
-        placeholder="Enter your password"
-        value={form.password}
-        onChange={handleChange}
-        error={errors.password} // Display error message here
-      />
-      <LabeledPasswordInput
-        label="Confirm Password"
-        name="passwordConfirmation"
-        placeholder="Confirm your password"
-        value={form.passwordConfirmation}
-        onChange={handleChange}
-        error={errors.passwordConfirmation} // Display error message here
-      />
-
-      <div className="text-sm mt-4">
-        <CheckboxWithLabel
-          label={
-            <>
-              I agree to the{" "}
-              <span className="text-blue-500 cursor-pointer">
-                Terms & Privacy
-              </span>
-            </>
-          }
-          checked={agreed}
-          onChange={(e) => setAgreed(e.target.checked)}
+        <LabeledInput
+          label="Name"
+          name="name"
+          placeholder="Enter your name"
+          value={form.name}
+          onChange={handleChange}
+          error={errors.name}
         />
-      </div>
 
-      <div className="text-center">
-        <Button
-          text={loading ? "Signing Up..." : "Sign Up"}
-          disabled={loading}
-          type="submit"
+        <LabeledInput
+          label="Email"
+          name="email"
+          type="email"
+          placeholder="Enter your email"
+          value={form.email}
+          onChange={handleChange}
+          error={errors.email}
         />
-      </div>
+        <LabeledInput
+          label="Phone"
+          name="phone"
+          type="tel"
+          placeholder="Enter your phone number"
+          value={form.phone}
+          onChange={handleChange}
+          error={errors.phone}
+        />
 
-      {message && ( // This message is for general backend errors not tied to a specific field
-        <p
-          className={`text-center text-sm mt-2 ${
-            message.includes("successful") ? "text-green-600" : "text-red-600"
-          }`}
-        >
-          {message}
+        <LabeledPasswordInput
+          label="Password"
+          name="password"
+          placeholder="Enter your password"
+          value={form.password}
+          onChange={handleChange}
+          error={errors.password}
+        />
+        <LabeledPasswordInput
+          label="Confirm Password"
+          name="passwordConfirmation"
+          placeholder="Confirm your password"
+          value={form.passwordConfirmation}
+          onChange={handleChange}
+          error={errors.passwordConfirmation}
+        />
+
+        <div className="text-sm mt-4">
+          <CheckboxWithLabel
+            label={
+              <>
+                I agree to the{" "}
+                <span className="text-blue-500 cursor-pointer hover:underline">
+                  Terms & Privacy
+                </span>
+              </>
+            }
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+          />
+        </div>
+
+        <div className="text-center">
+          <Button
+            text={loading ? "Signing Up..." : "Sign Up"}
+            disabled={loading}
+            type="submit"
+            className="w-full" // Make button full width
+          />
+        </div>
+
+        {message && (
+          <p
+            className={`text-center text-sm mt-2 ${
+              message.includes("successful") ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+
+        <p className="text-center text-sm text-gray-500 mt-4"> {/* Adjusted margin-top */}
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-500 hover:underline">
+            Log in
+          </Link>
         </p>
-      )}
-
-      <p className="text-center text-sm text-gray-500 mt-2">
-        Already have an account?{" "}
-        <Link to="/login" className="text-blue-500 hover:underline">
-          Log in
-        </Link>
-      </p>
-    </form>
+      </form>
+    </div>
   );
 };
 
