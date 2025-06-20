@@ -6,32 +6,36 @@ import CountdownTimer from '../CountdownTimer';
 
 
 interface PromoBannerProps {
-  imageSrc?: string; // Made optional if background is a solid color
+  imageSrc?: string;
   title: string;
   subtitle?: string;
   description?: string;
-  saleBadgeText?: string; // e.g., "30% OFF"
-  freeShippingText?: string; // e.g., "Free shipping on all your order."
+  saleBadgeText?: string;
+  freeShippingText?: string;
   ctaText: string;
   ctaLink: string;
-  // Specific content for banners (e.g., countdown, price info)
+  // Specific content for banners
   countdownTargetDate?: string;
   infoText?: string;
   discountText?: string;
+
   // Styling props
   contentPosition?: 'top-left' | 'bottom-left' | 'center-left' | 'bottom-right' | 'center';
   titleClass?: string;
   textColorClass?: string;
-  overlayBgColor?: string; // For a background overlay or solid color banner background
+  overlayBgColor?: string;
   ctaVariant?: 'button' | 'link';
   widthClass?: string;
   heightClass?: string;
   borderRadiusClass?: string;
-  ctaButtonBgColor?: string; // e.g., 'bg-white'
-  ctaButtonTextColor?: string; // e.g., 'text-green-500'
-  ctaButtonRoundedFull?: boolean; // e.g., true for circular button
-  saleBadgeBgColor?: string; // e.g., 'bg-orange-500'
-  imageShadowClass?: string; // For shadow effect on image/banner
+  ctaButtonBgColor?: string;
+  ctaButtonTextColor?: string;
+  ctaButtonRoundedFull?: boolean;
+  saleBadgeBgColor?: string;
+  imageShadowClass?: string;
+  subtitleClass?: string;
+  descriptionClass?: string;
+  combineTitleSubtitle?: boolean; // <-- NEW PROP: To render subtitle and title inline
 }
 
 const PromoBanner: FC<PromoBannerProps> = ({
@@ -58,7 +62,10 @@ const PromoBanner: FC<PromoBannerProps> = ({
   ctaButtonTextColor = 'text-white',
   ctaButtonRoundedFull = false,
   saleBadgeBgColor = 'bg-orange-500',
-  imageShadowClass = ''
+  imageShadowClass = '',
+  subtitleClass = '',
+  descriptionClass = '',
+  combineTitleSubtitle = false, // <-- Default to false
 }) => {
   let contentClasses = 'absolute p-6 flex flex-col';
   const ctaLinkClasses = 'inline-flex items-center text-sm font-semibold transition-colors duration-200';
@@ -77,10 +84,8 @@ const PromoBanner: FC<PromoBannerProps> = ({
   const finalCtaTextColor = ctaVariant === 'button' ? ctaButtonTextColor : 'text-emerald-500';
   const finalCtaBgColor = ctaVariant === 'button' ? `${ctaButtonBgColor} hover:bg-opacity-80` : 'bg-transparent hover:text-emerald-600';
 
-
   return (
     <div className={`relative overflow-hidden ${borderRadiusClass} ${widthClass} ${heightClass} ${imageShadowClass}`}>
-      {/* Background Image (only if imageSrc is provided) */}
       {imageSrc && (
         <img
           src={imageSrc}
@@ -89,19 +94,28 @@ const PromoBanner: FC<PromoBannerProps> = ({
         />
       )}
 
-      {/* Solid Color Overlay for text area / full banner background */}
       {overlayBgColor && (
         <div className={`absolute inset-0 ${overlayBgColor}`}></div>
       )}
 
-      {/* Content */}
       <div className={`${contentClasses} ${textColorClass} h-full`}>
-        {subtitle && <p className="text-sm font-medium mb-1">{subtitle}</p>}
-        <h3 className={`${titleClass} mb-2 leading-tight`}>{title}</h3>
-        {description && <p className="text-sm mb-3">{description}</p>}
+        {/* Conditional rendering for subtitle and title */}
+        {combineTitleSubtitle ? ( // <-- NEW: If combineTitleSubtitle is true
+          <h3 className={`${titleClass} mb-2 leading-tight flex items-center justify-center`}> {/* Added flex and justify-center */}
+            {subtitle && <span className={`${subtitleClass} mr-2`}>{subtitle}</span>} {/* Subtitle with right margin */}
+            {title}
+          </h3>
+        ) : ( // Normal vertical stacking
+          <>
+            {subtitle && <p className={`text-sm font-medium mb-1 ${subtitleClass}`}>{subtitle}</p>}
+            <h3 className={`${titleClass} mb-2 leading-tight`}>{title}</h3>
+          </>
+        )}
+
+        {description && <p className={`text-sm mb-3 ${descriptionClass}`}>{description}</p>}
 
         {saleBadgeText && (
-          <div className="text-center"> {/* Added text-center to div holding badge */}
+          <div className="text-center">
             <div className={`${saleBadgeBgColor} text-white text-xs font-semibold px-3 py-1 rounded-full inline-block mb-2`}>
               {saleBadgeText}
             </div>

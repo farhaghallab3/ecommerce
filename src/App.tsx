@@ -15,6 +15,7 @@ import SellerDashboardPage from "./pages/SellerDashboard";
 import { Header } from "./components/organisms/Header/Header";
 import Breadcrumbs from "./components/molecules/Breadcrumbs";
 import { Footer } from "./components/organisms/Footer/Footer";
+import ProductsPage from "./pages/ProductsPage";
 
 
 const Clint_ID = "10402982650-mib55r6gp857j7gjc40tvbqnsr009k8f.apps.googleusercontent.com";
@@ -36,10 +37,11 @@ function App() {
          <Route path="/login" element={<LoginForm />} />
          <Route path="/verify-otp" element={<VerifyOtpForm />} />
          <Route path="/seller-dashboard" element={<SellerDashboardPage />} />
-        {/* <Route path="/products" element={<ProductsPage />} />
-        <Route path="/cart" element={<CartPage />} />
+         <Route path="/shop" element={<ProductsPage />} />
+
+      {/*  <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />  */}
-         <Route path="/shop" element={<div>Shop Page Content</div>} /> {/* Example Shop Page */}
+          {/* Example Shop Page */}
             <Route path="/pages" element={<div>Pages Page Content</div>} /> {/* Example Pages Page */}
             <Route path="/blog" element={<div>Blog Page Content</div>} />   {/* Example Blog Page */}
             <Route path="/about-us" element={<div>About Us Page Content</div>} /> {/* Example About Us Page */}
