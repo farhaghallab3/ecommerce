@@ -98,7 +98,7 @@ const SignupForm = () => {
     setErrors({});
 
     try {
-      const res = await axios.post(
+       await axios.post(
         "https://e-commerce-web-site-ten.vercel.app/api/v1/auth/signUp",
         formData
       );
